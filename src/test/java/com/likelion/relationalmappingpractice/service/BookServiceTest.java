@@ -6,6 +6,8 @@ import com.likelion.relationalmappingpractice.repository.BookRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -34,10 +36,36 @@ class BookServiceTest {
 
         Book result = bookService.get(ID);
 
-        assertBoot(book, result);
+        assertBook(book, result);
     }
 
-    void assertBoot(Book expected, Book actual) {
+    @Test
+    void getAll() {
+        List<Book> bookList = new ArrayList<>();
+        final Integer AUTHOR_ID = 1;
+        final String AUTHOR_NAME = "박은종";
+        final Author AUTHOR = Author.builder()
+                .id(AUTHOR_ID)
+                .name(AUTHOR_NAME)
+                .build();
+        for (int i = 0; i < 3; i++) {
+            bookList.add(Book.builder()
+                            .id(i)
+                            .title("title" + i)
+                            .author(AUTHOR)
+                            .build());
+        }
+
+        given(bookRepository.findAll()).willReturn(bookList);
+
+        List<Book> books = bookService.getAll();
+
+        for (int i = 0; i < books.size(); i++) {
+            assertBook(bookList.get(i), books.get(i));
+        }
+    }
+
+    void assertBook(Book expected, Book actual) {
         assertEquals(expected.getId(), actual.getId());
         assertEquals(expected.getTitle(), actual.getTitle());
         assertEquals(expected.getAuthor(), actual.getAuthor());
