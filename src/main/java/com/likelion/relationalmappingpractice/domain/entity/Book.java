@@ -1,0 +1,14 @@
+package com.likelion.relationalmappingpractice.domain.entity;
+
+import javax.persistence.*;
+
+@Entity
+public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String title;
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private Author author;
+}
