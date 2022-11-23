@@ -2,7 +2,9 @@ package com.likelion.relationalmappingpractice.service;
 
 import com.likelion.relationalmappingpractice.domain.entity.Book;
 import com.likelion.relationalmappingpractice.repository.BookRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class BookService {
     private final BookRepository bookRepository;
 
