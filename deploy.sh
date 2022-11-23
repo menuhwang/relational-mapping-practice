@@ -1,6 +1,6 @@
 #!/bin/bas
 NAME=likelion-bookstore
-PORT=8080
+PORT=8081
 
 DATASOURCE_URL=$1
 DATASOURCE_USERNAME=$2
