@@ -10,6 +10,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -53,5 +56,34 @@ class BookControllerTest {
                 .andExpect(jsonPath("$.author.name").value(AUTHOR_NAME))
                 .andDo(print());
         verify(bookService).get(ID);
+    }
+
+    @Test
+    void getAll() throws Exception {
+        List<Book> bookList = new ArrayList<>();
+        final Integer AUTHOR_ID = 1;
+        final String AUTHOR_NAME = "박은종";
+        final Author AUTHOR = Author.builder()
+                .id(AUTHOR_ID)
+                .name(AUTHOR_NAME)
+                .build();
+        for (int i = 0; i < 3; i++) {
+            bookList.add(Book.builder()
+                    .id(i)
+                    .title("title" + i)
+                    .author(AUTHOR)
+                    .build());
+        }
+
+        given(bookService.getAll()).willReturn(bookList);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/books"))
+                .andExpect(jsonPath("$[*].id").exists())
+                .andExpect(jsonPath("$[*].title").exists())
+                .andExpect(jsonPath("$[*].author").exists())
+                .andExpect(jsonPath("$[*].author.id").exists())
+                .andExpect(jsonPath("$[*].author.name").exists())
+                .andDo(print());
+        verify(bookService).getAll();
     }
 }
