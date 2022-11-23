@@ -1,5 +1,6 @@
 package com.likelion.relationalmappingpractice.controller;
 
+import com.likelion.relationalmappingpractice.domain.dto.BookResponse;
 import com.likelion.relationalmappingpractice.domain.entity.Author;
 import com.likelion.relationalmappingpractice.domain.entity.Book;
 import com.likelion.relationalmappingpractice.service.BookService;
@@ -12,6 +13,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -42,7 +44,7 @@ class BookControllerTest {
                 .author(AUTHOR)
                 .build();
 
-        given(bookService.get(1)).willReturn(book);
+        given(bookService.get(1)).willReturn(BookResponse.of(book));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/books/" + ID))
                 .andExpect(jsonPath("$.id").exists())
@@ -75,7 +77,7 @@ class BookControllerTest {
                     .build());
         }
 
-        given(bookService.getAll()).willReturn(bookList);
+        given(bookService.getAll()).willReturn(bookList.stream().map(BookResponse::of).collect(Collectors.toList()));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/books"))
                 .andExpect(jsonPath("$[*].id").exists())
