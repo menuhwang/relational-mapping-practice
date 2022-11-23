@@ -37,9 +37,6 @@ fi
 echo "git pull start." &&
 git pull &&
 echo "git pull done." &&
-echo "gradle build" &&
-./gradlew build &&
-echo "gradle build done." &&
 echo "docker image build" &&
 docker build -t $NAME . &&
 echo "docker image build done." &&
