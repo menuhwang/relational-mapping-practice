@@ -12,12 +12,14 @@ public class BookResponse {
     private Integer id;
     private String title;
     private AuthorResponse author;
+    private PublisherResponse publisher;
 
     public static BookResponse of(Book book) {
         return BookResponse.builder()
                 .id(book.getId())
                 .title(book.getTitle())
                 .author(AuthorResponse.of(book.getAuthor()))
+                .publisher(PublisherResponse.of(book.getPublisher()))
                 .build();
     }
 }
