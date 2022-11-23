@@ -23,7 +23,7 @@ class BookControllerTest {
     private BookService bookService;
 
     @Test
-    void get(String s) throws Exception {
+    void get() throws Exception {
         final Integer ID = 1;
         final String TITLE = "Do It! 자바 프로그래밍 입문";
         final Integer AUTHOR_ID = 1;
