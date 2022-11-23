@@ -1,5 +1,6 @@
 package com.likelion.relationalmappingpractice.controller;
 
+import com.likelion.relationalmappingpractice.domain.dto.BookResponse;
 import com.likelion.relationalmappingpractice.domain.entity.Book;
 import com.likelion.relationalmappingpractice.service.BookService;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +21,12 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Book> get(@PathVariable("id") Integer id) {
+    public ResponseEntity<BookResponse> get(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(bookService.get(id));
     }
 
     @GetMapping("")
-    public ResponseEntity<List<Book>> getAll() {
+    public ResponseEntity<List<BookResponse>> getAll() {
         return ResponseEntity.ok(bookService.getAll());
     }
 }
