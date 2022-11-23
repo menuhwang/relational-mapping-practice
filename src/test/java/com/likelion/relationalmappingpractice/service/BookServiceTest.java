@@ -1,5 +1,6 @@
 package com.likelion.relationalmappingpractice.service;
 
+import com.likelion.relationalmappingpractice.domain.dto.BookResponse;
 import com.likelion.relationalmappingpractice.domain.entity.Author;
 import com.likelion.relationalmappingpractice.domain.entity.Book;
 import com.likelion.relationalmappingpractice.repository.BookRepository;
@@ -34,7 +35,7 @@ class BookServiceTest {
 
         given(bookRepository.findById(ID)).willReturn(Optional.of(book));
 
-        Book result = bookService.get(ID);
+        BookResponse result = bookService.get(ID);
 
         assertBook(book, result);
     }
@@ -58,16 +59,17 @@ class BookServiceTest {
 
         given(bookRepository.findAll()).willReturn(bookList);
 
-        List<Book> books = bookService.getAll();
+        List<BookResponse> books = bookService.getAll();
 
         for (int i = 0; i < books.size(); i++) {
             assertBook(bookList.get(i), books.get(i));
         }
     }
 
-    void assertBook(Book expected, Book actual) {
+    void assertBook(Book expected, BookResponse actual) {
         assertEquals(expected.getId(), actual.getId());
         assertEquals(expected.getTitle(), actual.getTitle());
-        assertEquals(expected.getAuthor(), actual.getAuthor());
+        assertEquals(expected.getAuthor().getId(), actual.getAuthor().getId());
+        assertEquals(expected.getAuthor().getName(), actual.getAuthor().getName());
     }
 }
